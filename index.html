@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kitsune & Neko: Japanese Playland</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <meta name="theme-color" content="#7c4dff"/>
+  <!-- iOS installability -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="JP Playland">
+  <link rel="apple-touch-icon" href="icon-180.png">
+  <!-- PWA manifest -->
+  <link rel="manifest" href="manifest.webmanifest">
+
+</head>
+<body>
+  <div id="app" class="app">
+    <header class="app__header">
+      <div class="brand">
+        <span class="brand__emoji" aria-hidden="true">🦊</span>
+        <span class="brand__emoji" aria-hidden="true">🐱</span>
+        <span class="brand__emoji" aria-hidden="true">🦄</span>
+        <h1 class="brand__title">Kitsune & Neko: Japanese Playland</h1>
+      </div>
+      <button id="btnSettings" class="btn btn--ghost" aria-label="Open settings">⚙️</button>
+    </header>
+
+    <main class="app__main">
+      <section id="home" class="view view--active" aria-labelledby="homeTitle">
+        <h2 id="homeTitle" class="view__title">Let’s Play & Learn!</h2>
+        <p class="view__tagline">Fun Japanese games with foxes, cats, and unicorns.</p>
+
+        <div class="menu">
+          <button class="cardbtn" data-view="flashcards">
+            <div class="cardbtn__icon" aria-hidden="true">🃏</div>
+            <div class="cardbtn__text">
+              <strong>Flash Cards</strong>
+              <span>Tap to hear & practice</span>
+            </div>
+          </button>
+
+          <button class="cardbtn" data-view="matching">
+            <div class="cardbtn__icon" aria-hidden="true">🧩</div>
+            <div class="cardbtn__text">
+              <strong>Match Game</strong>
+              <span>Pair words & meanings</span>
+            </div>
+          </button>
+
+          <button class="cardbtn" data-view="listening">
+            <div class="cardbtn__icon" aria-hidden="true">🎧</div>
+            <div class="cardbtn__text">
+              <strong>Listening Quiz</strong>
+              <span>Hear it, choose it</span>
+            </div>
+          </button>
+
+          <button class="cardbtn" data-view="stickers">
+            <div class="cardbtn__icon" aria-hidden="true">🏆</div>
+            <div class="cardbtn__text">
+              <strong>Sticker Book</strong>
+              <span>Earn fox, cat & unicorns</span>
+            </div>
+          </button>
+        </div>
+      </section>
+
+      <!-- Flashcards -->
+      <section id="flashcards" class="view" aria-labelledby="flashTitle">
+        <div class="view__header">
+          <button class="btn btn--ghost btn--back" data-view="home" aria-label="Back to home">←</button>
+          <h2 id="flashTitle" class="view__title">Flash Cards</h2>
+        </div>
+
+        <div class="toolbar">
+          <label class="toolbar__group">
+            <span>Pack</span>
+            <select id="flashPack" aria-label="Choose flashcard pack"></select>
+          </label>
+          <label class="toolbar__group">
+            <span>Voice</span>
+            <select id="voiceSelect" aria-label="Choose Japanese voice"></select>
+          </label>
+          <label class="toolbar__group">
+            <span>Speed</span>
+            <input id="rateRange" type="range" min="0.6" max="1.2" step="0.05" value="0.9" aria-label="Speech speed"/>
+          </label>
+          <button id="shuffleFlash" class="btn">Shuffle</button>
+        </div>
+
+        <div class="flash">
+          <button id="card" class="flash__card" aria-live="polite" aria-label="Flashcard: tap to flip and hear">
+            <div class="flash__face flash__face--front"></div>
+            <div class="flash__face flash__face--back"></div>
+          </button>
+          <div class="flash__actions">
+            <button id="prevCard" class="btn">⟨ Prev</button>
+            <button id="speakCard" class="btn btn--primary">🔊 Speak</button>
+            <button id="nextCard" class="btn">Next ⟩</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Matching -->
+      <section id="matching" class="view" aria-labelledby="matchTitle">
+        <div class="view__header">
+          <button class="btn btn--ghost btn--back" data-view="home" aria-label="Back to home">←</button>
+          <h2 id="matchTitle" class="view__title">Match Game</h2>
+        </div>
+
+        <div class="toolbar">
+          <label class="toolbar__group">
+            <span>Pack</span>
+            <select id="matchPack" aria-label="Choose pack for matching"></select>
+          </label>
+          <button id="newMatch" class="btn btn--primary">New Puzzle</button>
+        </div>
+
+        <div id="matchBoard" class="match">
+          <!-- Will be populated dynamically -->
+        </div>
+
+        <div id="matchStatus" class="status" role="status" aria-live="polite"></div>
+      </section>
+
+      <!-- Listening Quiz -->
+      <section id="listening" class="view" aria-labelledby="listenTitle">
+        <div class="view__header">
+          <button class="btn btn--ghost btn--back" data-view="home" aria-label="Back to home">←</button>
+          <h2 id="listenTitle" class="view__title">Listening Quiz</h2>
+        </div>
+
+        <div class="toolbar">
+          <label class="toolbar__group">
+            <span>Pack</span>
+            <select id="listenPack" aria-label="Choose pack for listening quiz"></select>
+          </label>
+          <button id="playPrompt" class="btn btn--primary">🔊 Play Word</button>
+        </div>
+
+        <div id="listenChoices" class="choices" role="group" aria-label="Options"></div>
+        <div id="listenStatus" class="status" role="status" aria-live="polite"></div>
+      </section>
+
+      <!-- Sticker book -->
+      <section id="stickers" class="view" aria-labelledby="stickersTitle">
+        <div class="view__header">
+          <button class="btn btn--ghost btn--back" data-view="home" aria-label="Back to home">←</button>
+          <h2 id="stickersTitle" class="view__title">Sticker Book</h2>
+        </div>
+        <p class="view__tagline">Earn a sticker by finishing a round in any game.</p>
+        <div id="stickerWall" class="stickerwall" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <dialog id="settingsDlg" class="dialog">
+      <form method="dialog" class="dialog__content">
+        <h3>Settings</h3>
+        <label class="switch">
+          <input type="checkbox" id="bigTextToggle" />
+          <span>Big Text Mode</span>
+        </label>
+        <label class="switch">
+          <input type="checkbox" id="autoSpeakToggle" checked/>
+          <span>Auto-speak on card flip</span>
+        </label>
+        <div class="dialog__actions">
+          <button class="btn">Close</button>
+        </div>
+      </form>
+    </dialog>
+
+    <footer class="app__footer">
+      <div class="friends" aria-hidden="true">
+        <div class="friend friend--fox">🦊</div>
+        <div class="friend friend--cat">🐱</div>
+        <div class="friend friend--unicorn">🦄</div>
+      </div>
+      <small>Made with ☀️ for little learners — Japanese TTS uses your browser’s voice.</small>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./service-worker.js').catch(()=>{});
+      });
+    }
+  </script>
+
+</body>
+</html>
